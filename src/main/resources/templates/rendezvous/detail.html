@@ -1,0 +1,91 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails du Rendez-vous</title>
+</head>
+<body>
+    <h1>Détails du Rendez-vous</h1>
+    
+    <div th:if="${rendezvous}">
+        <p><strong>Patient ID:</strong> <span th:text="${rendezvous.patientId}"></span></p>
+        <p><strong>Docteur ID:</strong> <span th:text="${rendezvous.doctorId}"></span></p>
+        <p><strong>Date:</strong> <span th:text="${#temporals.format(rendezvous.date, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <p><strong>Statut:</strong> <span th:text="${rendezvous.statut}"></span></p>
+        <p><strong>Urgence:</strong> <span th:text="${rendezvous.urgency}"></span></p>
+        
+        <a th:href="@{/rendezvous/edit/{id}(id=${rendezvous.id})}">Modifier</a> |
+        <a th:href="@{/rendezvous}">Retour à la liste</a>
+    </div>
+    
+    <div th:unless="${rendezvous}">
+        <p>Rendez-vous non trouvé</p>
+        <a th:href="@{/rendezvous}">Retour à la liste</a>
+    </div>
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails du rendez-vous</title>
+</head>
+<body>
+    <h1>Détails du rendez-vous</h1>
+    
+  
+    <div th:if="${rendezvous}">
+        <p><strong>Date:</strong> [[${#temporals.format(rendezvous.date, 'dd/MM/yyyy HH:mm')}]]</p>
+        <p><strong>Objet:</strong> [[${rendezvous.object}]]</p>
+        <p><strong>Statut:</strong> [[${rendezvous.statut?.name()}]]</p>
+        
+     
+        <h2>Patient</h2>
+        <p><strong>Nom:</strong> [[${rendezvous.patient.nom}]]</p>
+        <p><strong>Email:</strong> [[${rendezvous.patient.email}]]</p>
+        
+      
+        <div th:if="${rendezvous.statut.name() == 'En_Attend'}">
+            <form th:action="@{/rendezvous/{id}/confirm(id=${rendezvous.id})}" method="post">
+                <button type="submit">Confirmer</button>
+            </form>
+            <form th:action="@{/rendezvous/{id}/reject(id=${rendezvous.id})}" method="post">
+                <input type="text" name="reason" placeholder="Raison du rejet" required>
+                <button type="submit">Rejeter</button>
+            </form>
+        </div>
+    </div>
+    
+    <a th:href="@{/assistance/appointments}">Retour à la liste</a>
+</body>
+</html> 
+-->
+
+<div th:if="${rendezvous}">
+    <!-- Ajoutez la vérification null -->
+    <h2>Patient</h2>
+    <p th:if="${rendezvous.patient != null}">
+        <strong>Nom:</strong> [[${rendezvous.patient.nom}]]
+        <strong>Email:</strong> [[${rendezvous.patient.email}]]
+    </p>
+    <p th:if="${rendezvous.patient == null}" class="text-danger">
+        Information patient non disponible
+    </p>
+
+    <!-- Ajoutez le CSRF token -->
+    <form th:action="@{/rendezvous/{id}/confirm(id=${rendezvous.id})}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-circle"></i> Confirmer
+        </button>
+    </form>
+
+    <form th:action="@{/rendezvous/{id}/reject(id=${rendezvous.id})}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="text" name="reason" class="form-control" placeholder="Raison du rejet" required>
+        <button type="submit" class="btn btn-danger mt-2">
+            <i class="bi bi-x-circle"></i> Rejeter
+        </button>
+    </form>
+</div>

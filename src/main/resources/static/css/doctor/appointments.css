@@ -1,0 +1,636 @@
+:root {
+    --primary: #1a73e8;
+    --primary-dark: #0056b3;
+    --secondary: #34A853;
+    --secondary-light: #8BC34A;
+    --accent: #FF5722;
+    --dark: #212121;
+    --light: #f8f9fa;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --gradient: linear-gradient(135deg, #1a73e8, #34A853);
+    --danger: #e53935;
+    --warning: #FFC107;
+    --info: #2196F3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: var(--white);
+    background-image: url('/images/doctors-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 86, 179, 0.4));
+    z-index: 0;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-left a {
+    color: var(--white);
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.nav-left a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-left a.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--secondary-light);
+}
+
+.nav-left a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--secondary);
+    transition: width 0.3s ease;
+}
+
+.nav-left a:hover::after,
+.nav-left a.active::after {
+    width: 100%;
+}
+
+.logout-btn {
+    background: var(--gradient);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    color: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logout-btn:hover {
+    box-shadow: 0 8px 25px rgba(26, 115, 232, 0.6);
+    transform: translateY(-3px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+    margin-right: 2rem;
+}
+
+.logo i {
+    color: var(--secondary);
+    font-size: 1.75rem;
+    margin-right: 10px;
+}
+
+.center-content {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.appointments-container {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.appointments-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.appointments-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #ffffff, #8BC34A);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.appointments-header p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+}
+
+.calendar-container {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+#calendar {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    min-height: 600px;
+}
+
+/* Calendar Customization */
+.fc {
+    color: var(--white) !important;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.fc .fc-button-primary {
+    background: var(--gradient) !important;
+    border: none !important;
+    color: var(--white) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.fc .fc-button-primary:hover {
+    box-shadow: 0 4px 15px rgba(26, 115, 232, 0.6) !important;
+    transform: translateY(-2px) !important;
+}
+
+.fc .fc-button-primary:not(:disabled):active,
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+    background: linear-gradient(135deg, #1a73e8, #0056b3) !important;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.fc-theme-standard td, 
+.fc-theme-standard th {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.fc-theme-standard .fc-scrollgrid {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.fc .fc-daygrid-day {
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.fc .fc-daygrid-day:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.fc .fc-col-header-cell {
+    background-color: rgba(26, 115, 232, 0.3);
+    padding: 0.75rem 0;
+}
+
+.fc .fc-daygrid-day-number {
+    color: var(--white);
+    font-weight: 500;
+    padding: 8px;
+}
+
+.fc .fc-day-today {
+    background-color: rgba(52, 168, 83, 0.2) !important;
+}
+
+.fc-event {
+    cursor: pointer;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    margin: 2px 0 !important;
+    border: none !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease !important;
+}
+
+.fc-event:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.fc-event-title {
+    font-weight: 600 !important;
+    padding: 2px 0 !important;
+}
+
+/* Event colors based on urgency */
+.urgency-normal {
+    background-color: var(--info) !important;
+}
+
+.urgency-urgent {
+    background-color: var(--warning) !important;
+}
+
+.urgency-very-urgent {
+    background-color: var(--danger) !important;
+}
+
+.status-confirmed {
+    border-left: 4px solid var(--secondary) !important;
+}
+
+.status-pending {
+    border-left: 4px solid var(--warning) !important;
+}
+
+.status-canceled {
+    border-left: 4px solid var(--danger) !important;
+    opacity: 0.7;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.action-btn {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(26, 115, 232, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    justify-content: center;
+    text-decoration: none;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.action-btn:hover {
+    box-shadow: 0 10px 30px rgba(26, 115, 232, 0.6);
+    transform: translateY(-3px);
+}
+
+.confirm-btn {
+    background: linear-gradient(135deg, #34A853, #8BC34A);
+}
+
+.cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.medical-footer {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    text-align: center;
+    width: 100%;
+    z-index: 100;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.emergency-contact {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.emergency-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.emergency-item i {
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    transform: translateY(-50px);
+    transition: all 0.5s ease;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #1a73e8, #0056b3);
+    padding: 1.5rem;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-header i {
+    font-size: 2.5rem;
+}
+
+.modal-header h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.appointment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.info-item .label {
+    min-width: 120px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-item .value {
+    font-weight: 600;
+    color: white;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modal-actions .action-btn,
+.modal-actions .cancel-btn {
+    flex: 1;
+}
+
+/* Loading Animation */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--secondary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Ripple Effect */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    top: 0;
+    left: 0;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .center-content {
+        padding: 1rem;
+    }
+    
+    .appointments-container {
+        padding: 1.5rem;
+    }
+    
+    .appointments-header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .nav-left {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    
+    .nav-left a {
+        margin: 0.5rem;
+    }
+    
+    .logo {
+        margin-bottom: 1rem;
+        margin-right: 0;
+    }
+    
+    .emergency-contact {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .fc .fc-toolbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

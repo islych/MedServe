@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmer Suppression</title>
+</head>
+<body>
+    <h1>Confirmer la suppression</h1>
+    
+    <p>Êtes-vous sûr de vouloir supprimer ce rendez-vous ?</p>
+    <p th:text="'Patient ID: ' + ${rendezvous.patientId}"></p>
+    <p th:text="'Date: ' + ${#temporals.format(rendezvous.date, 'dd/MM/yyyy HH:mm')}"></p>
+    
+    <form th:action="@{/rendezvous/delete/{id}(id=${rendezvous.id})}" method="post">
+        <button type="submit">Confirmer la suppression</button>
+    </form>
+    
+    <a th:href="@{/rendezvous}">Annuler</a>
+</body>
+</html>

@@ -1,0 +1,74 @@
+@startuml Medical Appointment System
+
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecaseStyle roundbox
+
+' Actors
+actor User as "Utilisateur"
+actor Patient as "Patient"
+actor Doctor as "Médecin"
+actor Assistant as "Assistant"
+
+' Inheritance
+Patient --|> User
+Doctor --|> User
+Assistant --|> User
+
+' Use Cases
+rectangle "Système de Rendez-vous Médicaux" {
+    ' Fonctionnalités communes (User)
+    usecase "S'inscrire" as UC1
+    usecase "Se connecter" as UC2
+    usecase "Gérer le profil" as UC3
+    usecase "Consulter historique" as UC4
+
+    ' Fonctionnalités spécifiques Patient
+    usecase "Consulter les médecins" as UC5
+    usecase "Prendre rendez-vous" as UC6
+    usecase "Annuler rendez-vous" as UC7
+    usecase "Consulter mes rendez-vous" as UC8
+
+    ' Fonctionnalités spécifiques Médecin
+    usecase "Gérer disponibilités" as UC9
+    usecase "Consulter agenda" as UC10
+    usecase "Gérer mes patients" as UC11
+
+    ' Fonctionnalités spécifiques Assistant
+    usecase "Gérer les demandes de RDV" as UC12
+    usecase "Confirmer rendez-vous" as UC13
+    usecase "Rejeter rendez-vous" as UC14
+    usecase "Consulter planning" as UC15
+}
+
+' Relations User (communes)
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+
+' Relations Patient (spécifiques)
+Patient --> UC5
+Patient --> UC6
+Patient --> UC7
+Patient --> UC8
+
+' Relations Médecin (spécifiques)
+Doctor --> UC9
+Doctor --> UC10
+Doctor --> UC11
+
+' Relations Assistant (spécifiques)
+Assistant --> UC12
+Assistant --> UC13
+Assistant --> UC14
+Assistant --> UC15
+
+' Extensions
+UC6 ..> UC5 : <<include>>
+UC7 ..> UC8 : <<include>>
+UC12 ..> UC15 : <<include>>
+UC13 ..> UC12 : <<include>>
+UC14 ..> UC12 : <<include>>
+
+@enduml 

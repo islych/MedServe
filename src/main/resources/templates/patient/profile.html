@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Patient - MediCare</title>
+       <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/patient/home.css}">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MediCare</span>
+            </div>
+            
+            <a href="/patients/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+            <a href="/patients/doctors" class="ripple"><i class="fas fa-user-md"></i> Médecins</a>
+            <a href="/patients/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+            <a href="/patients/profile" class="ripple"><i class="fas fa-user-circle"></i> Mon Profil</a>
+       
+        </div>
+        <div class="nav-right">
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn ripple">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+    </nav>
+    <div class="center-content">
+        <div class="profile-container">
+            <h1 class="profile-title">Mon Profil</h1>
+            
+            <div class="profile-card">
+                <div class="profile-header">
+                    <i class="fas fa-user-circle profile-icon"></i>
+                    <h2 th:text="${patient.fullName}">Nom Prénom</h2>
+                </div>
+                
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <label><i class="fas fa-envelope"></i> Email :</label>
+                        <span th:text="${patient.email}">email@example.com</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <label><i class="fas fa-map-marker-alt"></i> Adresse :</label>
+                        <span th:text="${patient.adresse}">Adresse</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <label><i class="fas fa-birthday-cake"></i> Date de naissance :</label>
+                        <span th:text="${#dates.format(patient.date_naissance, 'dd/MM/yyyy')}">01/01/1990</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <label><i class="fas fa-city"></i> Ville :</label>
+                        <span th:text="${patient.ville}">Ville</span>
+                    </div>
+                </div>
+
+                <a href="/patients/profile/edit" class="action-btn">
+                    <i class="fas fa-edit"></i> Modifier le profil
+                </a>
+            </div>
+        </div>
+    </div>
+
+ 
+    <!-- Footer -->
+<footer class="medical-footer">
+    <div class="emergency-contact">
+        <div class="emergency-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>SAMU Maroc : 15</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-ambulance"></i>
+            <span>Urgences médicales : 141</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Police : 19</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-fire-extinguisher"></i>
+            <span>Pompiers : 15</span>
+        </div>
+    </div>
+    <div class="footer-text">
+        © 2025 MediCare Maroc - Tous droits réservés
+    </div>
+</footer>
+</body>
+</html>

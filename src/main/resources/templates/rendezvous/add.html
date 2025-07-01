@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouveau Rendez-vous - MediCare</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/patient/rendez-vous.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MediCare</span>
+            </div>
+            <a href="/patients/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+            <a href="/patients/doctors" class="ripple"><i class="fas fa-user-md"></i> Médecins</a>
+            <a href="/patients/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+            <a href="/patients/profile" class="ripple"><i class="fas fa-user-circle"></i> Mon Profil</a>
+            <a href="/patients/history" class="ripple"><i class="fas fa-history"></i> Historique</a>
+        </div>
+        <div class="nav-right">
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn ripple">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="center-content">
+        <div class="form-container">
+            <div class="form-header">
+                <i class="fas fa-calendar-plus form-icon"></i>
+                <h1>Nouveau Rendez-vous</h1>
+                <p>Prenez rendez-vous avec votre médecin en quelques clics</p>
+            </div>
+
+            <form id="appointmentForm" th:action="@{/rendezvous/save}" th:object="${rendezvous}" method="post" class="appointment-form">
+                <input type="hidden" th:field="*{doctor.id}"/>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-day"></i> Date du rendez-vous</label>
+                    <input type="date" 
+                        th:field="*{date}"
+                        min="[[${T(java.time.LocalDate).now().plusDays(1).format('yyyy-MM-dd')}]]"
+                        required>
+                    <small>Format: YYYY-MM-DD (À partir de demain)</small> 
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-bookmark"></i> Objet</label>
+                    <input type="text" th:field="*{object}" required 
+                        placeholder="Ex: Consultation générale">
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-comment-medical"></i> Description</label>
+                    <textarea th:field="*{description}" rows="3"
+                        placeholder="Décrivez vos symptômes..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-exclamation-triangle"></i> Niveau d'urgence</label>
+                    <select th:field="*{urgency}">
+                        <option value="">-- Sélectionner un niveau --</option>
+                        <option th:each="level : ${urgencyLevels}" 
+                                th:value="${level.name()}" 
+                                th:text="${#strings.capitalize(level.name().toLowerCase())}"></option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="action-btn confirm-btn ripple" onclick="handleSubmit()">
+                        <i class="fas fa-calendar-check"></i> Confirmer le rendez-vous
+                    </button>
+                    <a th:href="@{/patients/doctors}" class="cancel-btn ripple">
+                        <i class="fas fa-times"></i> Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-check-circle"></i>
+                <h3>Confirmation</h3>
+            </div>
+            <div class="modal-body">
+                <p>Votre rendez-vous a bien été enregistré !</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="medical-footer">
+        <div class="emergency-contact">
+            <div class="emergency-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>SAMU : 15</span>
+            </div>
+            <div class="emergency-item">
+                <i class="fas fa-ambulance"></i>
+                <span>Urgences européennes : 112</span>
+            </div>
+            <div class="emergency-item">
+                <i class="fas fa-fire-extinguisher"></i>
+                <span>Pompiers : 18</span>
+            </div>
+        </div>
+        <div class="footer-text">
+            © 2025 MediCare - Tous droits réservés
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="/js/patient/rendez-vous.js"></script>
+</body>
+</html>

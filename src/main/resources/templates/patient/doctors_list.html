@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Médecins Disponibles - Medical App</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{/css/patient/doctors.css?v=1.0}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <style>
+ 
+  </style>
+</head>
+
+<body>
+  <!-- Loading Overlay -->
+  <div class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <div class="logo">
+        <i class="fas fa-heartbeat"></i>
+        <span>MediCare</span>
+      </div>
+      <a href="/patients/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+      <a href="/patients/doctors" class="ripple"><i class="fas fa-user-md"></i> Médecins</a>
+      <a href="/patients/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+      <a href="/patients/profile" class="ripple"><i class="fas fa-user-circle"></i> Mon Profil</a>
+
+    </div>
+    <div class="nav-right">
+      <form th:action="@{/logout}" method="post" style="display: inline;">
+        <button type="submit" class="logout-btn ripple">
+          <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </button>
+      </form>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <div class="page-header">
+        <h1><i class="fas fa-user-md"></i> Nos Médecins Spécialistes</h1>
+        <p>Choisissez un professionnel de santé expérimenté et qualifié pour prendre soin de votre santé.</p>
+      </div>
+
+      <!-- Search & Filters -->
+      <!-- <div class="search-box">
+        <input type="text" id="searchInput" 
+               placeholder="Rechercher un médecin par nom ou spécialité..." 
+               onkeyup="filterDoctors()" />
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="filters-row">
+        <div class="filter-group">
+          <select id="cityFilter" class="form-select" onchange="filterDoctors()">
+            <option value="all">Toutes les villes</option>
+            <option th:each="city : ${cities}"
+                    th:value="${city}"
+                    th:text="${city}"></option>
+          </select>
+        </div>
+    
+      <div class="filters" id="specialtyFilters">
+        <div class="filter-tag active" 
+             data-specialty="all" 
+             onclick="filterBySpecialty('all')">Tous</div>
+        
+        <div th:each="specialty : ${T(com.medical.appointment.appointment.Model.enums.Specialty).values()}"
+             class="filter-tag" 
+             th:attr="data-specialty=${specialty.name()}"
+             onclick="filterBySpecialty(this.dataset.specialty)">
+          <span th:text="${specialty.displayName}"></span>
+        </div>
+      </div> -->
+
+      <div class="filters-container">
+  <div class="search-box">
+    <input type="text" id="globalSearch" 
+           placeholder="Rechercher par nom, spécialité ou ville..."
+           onkeyup="updateFilters()">
+    <button type="submit"><i class="fas fa-search"></i></button>
+  </div>
+
+  <div class="filter-group">
+    <div class="filter-controls">
+      <select id="cityFilter" class="form-select" onchange="updateFilters()">
+        <option value="all">Toutes les villes</option>
+        <option th:each="city : ${cities}" 
+                th:value="${city}" 
+                th:text="${city}"></option>
+      </select>
+
+      <select id="specialtyFilter" class="form-select" onchange="updateFilters()">
+        <option value="all">Toutes les spécialités</option>
+        <option th:each="specialty : ${T(com.medical.appointment.appointment.Model.enums.Specialty).values()}"
+                th:value="${specialty.name()}"
+                th:text="${specialty.displayName}"></option>
+      </select>
+    </div>
+  </div>
+</div>
+    
+  
+      <!-- Doctors Grid -->
+     <!-- Doctors Grid Corrigé -->
+  <div class="doctors-grid">
+    <div class="doctor-card" 
+         th:each="doctor : ${doctors}"
+         th:attr="data-name=${doctor.firstName + ' ' + doctor.lastName},
+         data-specialty=${doctor.specialty?.name},
+         data-city=${doctor.ville}"
+         th:style="'animation-delay: ' + ${doctorStat.index * 0.1} + 's'">
+      
+      <div class="doctor-avatar">
+        <img th:src="${doctor.photoUrl ?: '/images/default-avatar.png'}" 
+             alt="Photo du médecin"
+             class="doctor-photo">
+      </div>
+      
+          <h3 class="doctor-name">Dr. <span th:text="${doctor.firstName + ' ' + doctor.lastName}"></span></h3>
+          <span class="doctor-specialty" th:text="${doctor.specialty?.displayName}"></span>
+          
+          <div class="doctor-rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          
+          <div class="doctor-info">
+            <p>Spécialiste qualifié avec une grande expérience dans son domaine. Consultations disponibles en présentiel et téléconsultation.</p>
+          </div>
+          
+          <div class="doctor-actions">
+            <a th:href="@{/rendezvous/new?doctorId={id}(id=${doctor.id})}" class="btn btn-primary ripple">
+              <i class="fas fa-calendar-plus"></i> Prendre RDV
+            </a>
+            <a th:href="@{/doctor/{id}/profile(id=${doctor.id})}" class="btn btn-outline ripple">
+              <i class="fas fa-id-card"></i> Voir le profil
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <div class="page-item active">1</div>
+        <div class="page-item">2</div>
+        <div class="page-item">3</div>
+        <div class="page-item"><i class="fas fa-ellipsis-h"></i></div>
+        <div class="page-item">10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Notification -->
+  <!-- <div class="floating-notification">
+    <i class="fas fa-bell"></i>
+    <span>Nouveaux médecins disponibles</span>
+    <div class="notification-badge">5</div>
+  </div> -->
+
+  <!-- Footer -->
+<footer class="medical-footer">
+    <div class="emergency-contact">
+        <div class="emergency-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>SAMU Maroc : 15</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-ambulance"></i>
+            <span>Urgences médicales : 141</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Police : 19</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-fire-extinguisher"></i>
+            <span>Pompiers : 15</span>
+        </div>
+    </div>
+    <div class="footer-text">
+        © 2025 MediCare Maroc - Tous droits réservés
+    </div>
+</footer>
+
+  <!-- Script -->
+  <script th:src="@{/js/patient/doctors.js}" defer></script>
+</body>
+</html> 

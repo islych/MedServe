@@ -1,0 +1,21 @@
+<nav th:fragment="navbar" class="navbar">
+
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MediCare</span>
+            </div>
+            <a href="/patients/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+            <a href="/patients/doctors" class="ripple"><i class="fas fa-user-md"></i> Médecins</a>
+            <a href="/patients/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+            <a href="/patients/profile" class="ripple"><i class="fas fa-user-circle"></i> Mon Profil</a>
+            <a href="/patients/history" class="ripple"><i class="fas fa-history"></i> Historique</a>
+        </div>
+        <div class="nav-right">
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn ripple">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+    </nav>

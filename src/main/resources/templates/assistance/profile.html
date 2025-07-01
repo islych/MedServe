@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Assistante - MediAssist</title>
+    <link rel="stylesheet" th:href="@{/css/assistance/home.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>MediCare</span>
+        </div>
+        <a href="/assistance/home"><i class="fas fa-home"></i> Accueil</a>
+        <a href="/assistance/appointments"><i class="fas fa-calendar-alt"></i> RDV</a>
+        <a href="/assistance/profile" class="active"><i class="fas fa-user-circle"></i> Profil</a>
+    </div>
+    <div class="nav-right">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="center-content">
+    <div class="dashboard-card profile-card">
+        <h2 class="profile-title">
+            <i class="fas fa-user-nurse"></i> Mon Profil
+        </h2>
+        
+        <div class="details-grid">
+            <div class="info-section">
+                <h4><i class="fas fa-id-card"></i> Informations personnelles</h4>
+                <p><strong>Nom complet :</strong> <span th:text="${assistance.fullName}"></span></p>
+                <p><strong>Email :</strong> <span th:text="${assistance.email}"></span></p>
+                <p><strong>Date de naissance :</strong> 
+                    <span th:text="${#dates.format(assistance.date_naissance, 'dd/MM/yyyy')}"></span>
+                </p>
+            </div>
+            
+            <div class="info-section">
+                <h4><i class="fas fa-map-marked-alt"></i> Localisation</h4>
+                <p><strong>Adresse :</strong> <span th:text="${assistance.adresse}"></span></p>
+                <p><strong>Ville :</strong> <span th:text="${assistance.ville}"></span></p>
+                <p><strong>Médecin associé :</strong> 
+                    <span th:text="${assistance.doctor?.fullName ?: 'Non assigné'}"></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <a href="/assistance/profile/edit" class="action-btn">
+                <i class="fas fa-edit"></i> Modifier le profil
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="emergency-contact">
+            <div class="emergency-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>SAMU : 15</span>
+            </div>
+            <div class="emergency-item">
+                <i class="fas fa-ambulance"></i>
+                <span>Urgences : 112</span>
+            </div>
+        </div>
+        <div class="footer-text">
+            © 2025 MediAssist - Tous droits réservés
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

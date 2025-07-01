@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Rendez-vous</title>
+</head>
+<body>
+    <h1>Gestion des Rendez-vous</h1>
+    
+    <!-- Formulaire de recherche -->
+    <form th:action="@{/rendezvous/search}" method="get">
+        <select name="statut">
+            <option value="">Statut</option>
+            <option th:each="s : ${statuts}" 
+                    th:value="${s}" 
+                    th:text="${s}"></option>
+        </select>
+
+        <select name="urgency">
+            <option value="">Urgence</option>
+            <option th:each="u : ${urgencyLevels}" 
+                    th:value="${u}" 
+                    th:text="${u}"></option>
+        </select>
+
+        <input type="date" name="startDate">
+        <input type="date" name="endDate">
+        
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <!-- Tableau des rendez-vous -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Docteur</th>
+                <th>Date/Heure</th>
+                <th>Statut</th>
+                <th>Urgence</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="rv : ${rendezvousList}">
+                <td th:text="${rv.patientId}">ID Patient</td>
+                <td th:text="${rv.doctorId}">ID Docteur</td>
+                <td th:text="${#temporals.format(rv.date, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${rv.statut}"></td>
+                <td th:text="${rv.urgency}"></td>
+                <td>
+                    <a th:href="@{/rendezvous/{id}(id=${rv.id})}">Voir</a> |
+                    <a th:href="@{/rendezvous/edit/{id}(id=${rv.id})}">Modifier</a> |
+                    <a th:href="@{/rendezvous/delete/{id}(id=${rv.id})}">Supprimer</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <a th:href="@{/rendezvous/new}">Créer nouveau rendez-vous</a>
+</body>
+</html>

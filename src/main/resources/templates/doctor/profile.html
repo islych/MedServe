@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Médecin - MediCare</title>
+    <!-- Conservation exacte de la référence CSS existante -->
+    <link rel="stylesheet" th:href="@{/css/doctor/profile.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+          <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>MediCare</span>
+          </div>
+          <a href="/doctor/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+          <a href="/doctor/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+          <a href="/doctor/profile" class="ripple"><i class="fas fa-user-md"></i> Mon Profil</a>
+          <a href="/doctor/assistance" class="ripple"><i class="fas fa-users-cog"></i> Gérer mon compte</a>
+        </div>
+        <div class="nav-right">
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn ripple">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
+          </form>
+        </div>
+      </nav>
+    
+
+    <div class="center-content">
+    
+        <div class="profile-container">
+            <div class="profile-header">
+                <i class="fas fa-user-md profile-icon"></i>
+
+                <div class="profile-photo-container">
+                    <img th:src="@{${doctor.photoUrl}}" 
+                    alt="Photo de profil" 
+                    class="profile-photo"
+                    onerror="this.src='/images/default-avatar.png'"> <!-- Fallback -->
+                </div>
+
+                <h1 class="profile-title" th:text="${doctor.fullName}">Dr. Nom Prénom</h1>
+                <p class="profile-subtitle" th:text="${doctor.specialty?.displayName}">Spécialité</p>
+            </div>
+
+            <div class="profile-card">
+                <!-- Adaptation parfaite au modèle Doctor -->
+                <div class="detail-item">
+                    <label><i class="fas fa-stethoscope"></i> Spécialité :</label>
+                    <span th:text="${doctor.specialty?.displayName}">Cardiologie</span>
+                </div>
+                
+                <div class="detail-item">
+                    <label><i class="fas fa-envelope"></i> Email :</label>
+                    <span th:text="${doctor.email}">email@exemple.com</span>
+                </div>
+                
+                <div class="detail-item">
+                    <label><i class="fas fa-map-marker-alt"></i> Adresse :</label>
+                    <span th:text="${doctor.adresse}">123 Avenue de la Médecine</span>
+                </div>
+                
+                <div class="detail-item">
+                    <label><i class="fas fa-city"></i> Ville :</label>
+                    <span th:text="${doctor.ville}">Paris</span>
+                </div>
+
+                <!-- Lien d'édition fonctionnel avec le contrôleur -->
+                <a th:href="@{/doctor/profile/edit}" class="action-btn">
+                    <i class="fas fa-edit"></i> Modifier mon profil
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer conservé tel quel -->
+    <footer class="medical-footer">
+        <div class="emergency-contact">
+            <div class="emergency-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>SAMU : 15</span>
+            </div>
+            <div class="emergency-item">
+                <i class="fas fa-ambulance"></i>
+                <span>Urgences européennes : 112</span>
+            </div>
+        </div>
+        <div class="footer-text">
+            © 2025 MediCare - Tous droits réservés
+        </div>
+    </footer>
+
+    <!-- Scripts préservés -->
+    <script th:src="@{/js/doctor/profile.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

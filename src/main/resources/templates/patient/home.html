@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Patient - Medical App</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/patient/home.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    
+
+    <style>
+    
+    </style>
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MediCare</span>
+            </div>
+            <a href="/patients/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+            <a href="/patients/doctors" class="ripple"><i class="fas fa-user-md"></i> Médecins</a>
+            <a href="/patients/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+            <a href="/patients/profile" class="ripple"><i class="fas fa-user-circle"></i> Mon Profil</a>
+     
+        </div>
+        <div class="nav-right">
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn ripple">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Main Content with background blur and text -->
+    <div class="center-content">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1>Votre santé, notre priorité</h1>
+                <p>Prenez soin de vous avec notre plateforme médicale intuitive. Réservez vos consultations rapidement et bénéficiez d'un suivi personnalisé avec nos meilleurs médecins.</p>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Disponibilité</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Médecins</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                </div>
+                
+                <a href="/patients/doctors" class="action-btn ripple">
+                    <i class="far fa-calendar-plus"></i> Prendre rendez-vous maintenant
+                </a>
+            </div>
+            
+            <div class="hero-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Rendez-vous en ligne</h3>
+                        <p>Réservez vos consultations en quelques clics et recevez une confirmation immédiate.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Dossier médical sécurisé</h3>
+                        <p>Accédez à votre historique médical complet et partagez-le en toute sécurité avec vos médecins.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comment-medical"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Suivi personnalisé</h3>
+                        <p>Échangez avec votre médecin et recevez des conseils adaptés à votre situation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Notification -->
+    <!-- <div class="floating-notification">
+        <i class="fas fa-bell"></i>
+        <span>Nouvelles notifications</span>
+        <div class="notification-badge">3</div>
+    </div> -->
+
+    <!-- Footer -->
+<footer class="medical-footer">
+    <div class="emergency-contact">
+        <div class="emergency-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>SAMU Maroc : 15</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-ambulance"></i>
+            <span>Urgences médicales : 141</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Police : 19</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-fire-extinguisher"></i>
+            <span>Pompiers : 15</span>
+        </div>
+    </div>
+    <div class="footer-text">
+        © 2025 MediCare Maroc - Tous droits réservés
+    </div>
+</footer>
+
+    <!-- Script -->
+    <script src="/js/patient/home.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Patient - MediCare</title>
+    <link rel="stylesheet" th:href="@{/css/patient/home.css}">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MediCare</span>
+            </div>
+            <a href="/patients/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+            <a href="/patients/doctors" class="ripple"><i class="fas fa-user-md"></i> Médecins</a>
+            <a href="/patients/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+            <a href="/patients/profile" class="ripple"><i class="fas fa-user-circle"></i> Mon Profil</a>
+     
+        </div>
+        <div class="nav-right">
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn ripple">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="center-content">
+        <div class="profile-container">
+            <h1 class="profile-title">Modifier mon Profil</h1>
+            
+            <form th:action="@{/patients/profile/update}" method="post" class="profile-form">
+                <div class="form-group">
+                    <label>Prénom :</label>
+                    <input type="text" th:field="${patient.firstName}" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label>Nom :</label>
+                    <input type="text" th:field="${patient.lastName}" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label>Adresse :</label>
+                    <textarea th:field="${patient.adresse}" class="form-textarea"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ville :</label>
+                    <input type="text" th:field="${patient.ville}" class="form-input">
+                </div>
+
+                
+
+                <button type="submit" class="action-btn">
+                    <i class="fas fa-save"></i> Enregistrer
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

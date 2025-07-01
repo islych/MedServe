@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion du Rendez-vous</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/assistance/home.css}">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left">
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+               <span>MediCare</span>
+        </div>
+        <a href="/assistance/home" class="active">
+            <i class="fas fa-home"></i> Accueil
+        </a>
+        <a href="/assistance/appointments">
+            <i class="fas fa-calendar-alt"></i> RDV
+        </a>
+        <a href="/assistance/profile">
+          <i class="fas fa-user"></i> Profil
+      </a>
+       
+    </div>
+    <div class="nav-right">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
+        </form>
+    </div>
+</nav>
+
+
+<div class="center-content">
+  <div class="dashboard-card appointment-card">
+        <h2 class="text-primary mb-4">
+            <i class="bi bi-calendar2-week"></i> Détails du Rendez-vous
+        </h2>
+
+        <div class="details-grid">
+          <div class="info-section">
+                <h4>📅 Informations principales</h4>
+                <p><strong>Date:</strong> <span th:text="${#dates.format(rendezvous.date, 'dd/MM/yyyy HH:mm')}"></span></p>
+                <p><strong>Statut:</strong> 
+                    <span class="status-badge" 
+                          th:class="${rendezvous.statut.name() == 'En_Attend' ? 'bg-warning' : 
+                                    (rendezvous.statut.name() == 'Confirme' ? 'bg-success' : 'bg-danger')}"
+                          th:text="${rendezvous.statut.name()}">
+                    </span>
+                </p>
+            </div>
+            <div class="info-section">
+                <h4>👤 Patient</h4>
+                <p><strong>Nom:</strong> <span th:text="${rendezvous.patient?.fullName ?: 'Non renseigné'}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${rendezvous.patient?.email ?: 'Non renseigné'}"></span></p>
+                
+                <h4 class="mt-3">👨⚕️ Médecin</h4>
+                <p><strong>Nom:</strong> <span th:text="${rendezvous.doctor?.fullName ?: 'Non assigné'}"></span></p>
+            </div>
+        </div>
+
+        <!-- Formulaire de modification pour les assistantes -->
+        <div  class="form-radio-group" th:if="${isAssistant != null and isAssistant and rendezvous.statut.name() == 'En_Attend'}">
+            <form th:action="@{/rendezvous/update/{id}(id=${rendezvous.id})}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Changer le statut :</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="statut" id="confirmer" value="Confirme">
+                        <label class="form-check-label text-success" for="confirmer">
+                            Confirmer le rendez-vous
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="statut" id="annuler" value="Annule">
+                        <label class="form-check-label text-danger" for="annuler">
+                            Annuler le rendez-vous
+                        </label>
+                    </div>
+                </div>
+
+               
+                <div class="mb-3" id="reasonSection" style="display: none;">
+                    <label for="rejectionReason" class="form-label">Raison d'annulation :</label>
+                    <textarea class="form-control" id="rejectionReason" name="rejectionReason" rows="3"></textarea>
+                  </div>
+                  <div class="quick-actions">
+                    <button type="submit" class="action-btn">Enregistrer</button>
+                    <a href="/assistance/appointments" class="action-btn secondary">Retour</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Message si le RDV n'est plus modifiable -->
+        <div th:if="${isAssistant && rendezvous.statut.name() != 'En_Attend'}" class="custom-alert">
+            Ce rendez-vous est déjà traité et ne peut plus être modifié.
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('input[name="statut"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const reasonSection = document.getElementById('reasonSection');
+        reasonSection.style.display = (e.target.value === 'Annule') ? 'block' : 'none';
+    });
+});
+</script>
+
+</body>
+</html>

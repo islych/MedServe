@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Assistance - Medical App</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/assistance/home.css}">
+</head>
+
+<body>
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MediCare</span>
+            </div>
+            <a href="/assistance/home" class="active">
+                <i class="fas fa-home"></i> Accueil
+            </a>
+            <a href="/assistance/appointments">
+                <i class="fas fa-calendar-alt"></i> RDV
+            </a>
+            <a href="/assistance/profile">
+                <i class="fas fa-user"></i> Profil
+            </a>
+           
+        </div>
+        <div class="nav-right">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+    </nav>
+<div class="center-content">
+    <div class="dashboard-container">
+        <div class="welcome-section text-center animate__animated animate__fadeIn">
+            <h1>Espace Assistant Médical</h1>
+            <p class="text-muted">Vous êtes le pilier silencieux du bon fonctionnement médical.</p>
+        </div>
+
+        <div class="motivation-section mt-4">
+            <div class="card p-4 shadow-sm border-0 animate__animated animate__fadeInUp">
+                <h5 class="mb-3"><i class="fas fa-hands-helping text-primary"></i> Votre rôle compte</h5>
+                <p>Grâce à votre rigueur et votre bienveillance, chaque consultation devient plus fluide et chaque patient mieux accompagné.</p>
+            </div>
+        </div>
+
+        <div class="daily-tip mt-4">
+            <div class="card p-3 bg-light border-start border-3 border-success animate__animated animate__fadeInRight">
+                <h6 class="text-success"><i class="fas fa-lightbulb"></i> Conseil du jour</h6>
+                <p class="mb-0">Un sourire et une écoute attentive peuvent apaiser bien plus qu’on ne le pense. Votre humanité est votre plus bel outil.</p>
+            </div>
+        </div>
+
+        <div class="teamwork-reminder mt-4">
+            <div class="card p-3 shadow-sm animate__animated animate__fadeInLeft">
+                <h6><i class="fas fa-user-friends text-warning"></i> Ensemble, on va plus loin</h6>
+                <p class="mb-0">N'hésitez pas à échanger avec vos collègues médecins ou assistants : l’entraide fait la force d’une équipe médicale.</p>
+            </div>
+        </div>
+
+ 
+    </div>
+</div>
+
+
+  <!-- Footer -->
+ <footer class="medical-footer">
+    <div class="emergency-contact">
+      <div class="emergency-item">
+        <i class="fas fa-phone-alt"></i>
+        <span>Police : 19</span>
+      </div>
+      <div class="emergency-item">
+        <i class="fas fa-ambulance"></i>
+        <span>SAMU : 141</span>
+      </div>
+      <div class="emergency-item">
+        <i class="fas fa-fire-extinguisher"></i>
+        <span>Pompiers : 15</span>
+      </div>
+    </div>
+    <div class="footer-text">
+      © 2025 MediCare - Tous droits réservés
+    </div>
+  </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            document.querySelector('.loading-overlay').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+:root {
+    --primary: #1a73e8;
+    --primary-dark: #0056b3;
+    --secondary: #34A853;
+    --secondary-light: #8BC34A;
+    --accent: #FF5722;
+    --dark: #212121;
+    --light: #f8f9fa;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --gradient: linear-gradient(135deg, #1a73e8, #34A853);
+    --warning: #FFC107;
+    --danger: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: var(--white);
+    background-image: url('/images/doctors-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 86, 179, 0.4));
+    z-index: 0;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar-scrolled {
+    background: rgba(26, 115, 232, 0.95);
+    box-shadow: var(--shadow);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-left a {
+    color: var(--white);
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.nav-left a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-left a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--secondary);
+    transition: width 0.3s ease;
+}
+
+.nav-left a:hover::after {
+    width: 100%;
+}
+
+.logout-btn {
+    background: var(--gradient);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    color: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logout-btn:hover {
+    box-shadow: 0 8px 25px rgba(26, 115, 232, 0.6);
+    transform: translateY(-3px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+    margin-right: 2rem;
+}
+
+.logo i {
+    color: var(--secondary);
+    font-size: 1.75rem;
+    margin-right: 10px;
+}
+
+.center-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.appointments-container {
+    max-width: 1200px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeInUp 1s ease-out;
+}
+
+.appointments-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.appointments-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #ffffff, #8BC34A);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.appointments-header p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.appointments-table {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+}
+
+.appointments-table table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.appointments-table th {
+    background: rgba(26, 115, 232, 0.3);
+    padding: 1rem;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.appointments-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.appointments-table tr:hover td {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.status {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.status.waiting {
+    background-color: var(--warning);
+    color: var(--dark);
+}
+
+.status.confirmed {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+.status.cancelled {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+.rejection-reason {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.action-btn {
+    background: var(--gradient);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(26, 115, 232, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+}
+
+.action-btn:hover {
+    box-shadow: 0 10px 30px rgba(26, 115, 232, 0.6);
+    transform: translateY(-3px);
+}
+
+.medical-footer {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    text-align: center;
+    width: 100%;
+    z-index: 100;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.emergency-contact {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.emergency-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.emergency-item i {
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.floating-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--primary);
+    color: var(--white);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideInUp 0.5s ease-out;
+    z-index: 1000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.floating-notification:hover {
+    background: var(--primary-dark);
+    transform: translateY(-5px);
+}
+
+.notification-badge {
+    background: var(--accent);
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Loading Animation */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--secondary);
+    animation: spin 1s linear infinite;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ripple Effect */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    top: 0;
+    left: 0;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .appointments-container {
+        padding: 1.5rem;
+    }
+    
+    .appointments-header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .nav-left {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    
+    .nav-left a {
+        margin: 0.5rem;
+    }
+    
+    .emergency-contact {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .appointments-table {
+        font-size: 0.9rem;
+    }
+    
+    .status {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.8rem;
+    }
+}

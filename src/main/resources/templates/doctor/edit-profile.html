@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier Profil</title>
+    <link rel="stylesheet" th:href="@{/css/patient/home.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+          <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>MediCare</span>
+          </div>
+          <a href="/doctor/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+          <a href="/doctor/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+          <a href="/doctor/profile" class="ripple"><i class="fas fa-user-md"></i> Mon Profil</a>
+          <a href="/doctor/assistance" class="ripple"><i class="fas fa-users-cog"></i> Gérer mon compte</a>
+        </div>
+        <div class="nav-right">
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn ripple">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
+          </form>
+        </div>
+      </nav>
+    
+
+    <div class="center-content">
+        <div class="profile-form">
+            <h2 class="profile-title">Modifier le Profil</h2>
+            
+            <form th:action="@{/doctor/profile/update}" method="post" enctype="multipart/form-data">
+
+              <div class="form-group">
+                <label>Photo de profil</label>
+                <div class="current-photo">
+                    <img th:src="@{${doctor.photoUrl}}" 
+                         alt="Photo actuelle"
+                         class="profile-photo">
+                    <input type="hidden" name="currentPhoto" th:value="${doctor.photoUrl}">
+                </div>
+                <input type="file" class="form-input" name="photo" accept="image/*">
+                <small>Formats acceptés : JPG, PNG (max 5MB)</small>
+            </div>
+
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input type="text" class="form-input" 
+                           th:field="${doctor.firstName}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input type="text" class="form-input" 
+                           th:field="${doctor.lastName}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Adresse</label>
+                    <input type="text" class="form-input" 
+                           th:field="${doctor.adresse}">
+                </div>
+                
+                <!-- <div class="form-group">
+                    <label>Ville</label>
+                    <input type="text" class="form-input" 
+                           th:field="${doctor.ville}">
+                </div> -->
+                <div class="form-group">
+    <label>Ville</label>
+    <select class="form-input" th:field="${doctor.ville}" required>
+        <option value="" disabled>Sélectionnez votre ville</option>
+        <option th:each="ville : ${villes}" 
+                th:value="${ville}"
+                th:text="${ville}"
+                th:selected="${ville == doctor.ville}"></option>
+    </select>
+</div>
+                <div class="form-group">
+                    <label>Spécialité</label>
+                    <select class="form-input" th:field="${doctor.specialty}">
+                        <option th:each="specialty : ${specialties}" 
+                                th:value="${specialty}" 
+                                  th:text="${specialty.displayName}"></option> 
+                    </select>
+                </div>
+
+                <button type="submit" class="action-btn">
+                    <i class="fas fa-save"></i>
+                    Enregistrer les modifications
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

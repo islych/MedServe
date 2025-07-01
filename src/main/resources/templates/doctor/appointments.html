@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Rendez-vous - MediCare</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <link rel="stylesheet" th:href="@{/css/doctor/appointments.css}">
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+          <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>MediCare</span>
+          </div>
+          <a href="/doctor/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+          <a href="/doctor/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+          <a href="/doctor/profile" class="ripple"><i class="fas fa-user-md"></i> Mon Profil</a>
+          <a href="/doctor/assistance" class="ripple"><i class="fas fa-users-cog"></i> Gérer mon compte</a>
+        </div>
+        <div class="nav-right">
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn ripple">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
+          </form>
+        </div>
+      </nav>
+    
+
+    <!-- Main Content -->
+    <div class="center-content">
+        <div class="appointments-container">
+            <div class="appointments-header">
+                <h1><i class="far fa-calendar-check"></i> Mes Rendez-vous</h1>
+                <p>Consultez et gérez tous vos rendez-vous médicaux programmés</p>
+            </div>
+            
+            <!-- Calendar View -->
+            <div class="calendar-container animate__animated animate__fadeIn">
+                <div id="calendar"></div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="/doctor/schedule" class="action-btn ripple">
+                    <i class="fas fa-clock"></i> Gérer mes disponibilités
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Appointment Detail Modal -->
+    <div class="modal" id="appointmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-calendar-day"></i>
+                <h2>Détails du rendez-vous</h2>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-info">
+                    <div class="info-item">
+                        <span class="label"><i class="fas fa-user"></i> Patient:</span>
+                        <span class="value" id="modal-patient">...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label"><i class="fas fa-calendar"></i> Date:</span>
+                        <span class="value" id="modal-date">...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label"><i class="fas fa-clipboard"></i> Motif:</span>
+                        <span class="value" id="modal-reason">...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label"><i class="fas fa-exclamation-circle"></i> Urgence:</span>
+                        <span class="value" id="modal-urgency">...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label"><i class="fas fa-info-circle"></i> Statut:</span>
+                        <span class="value" id="modal-status">...</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <a href="#" id="modal-manage-link" class="action-btn confirm-btn ripple">
+                        <i class="fas fa-pen"></i> Gérer ce rendez-vous
+                    </a>
+                    <button class="cancel-btn ripple" id="closeModal">
+                        <i class="fas fa-times"></i> Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="medical-footer">
+        <div class="emergency-contact">
+            <div class="emergency-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>SAMU : 15</span>
+            </div>
+            <div class="emergency-item">
+                <i class="fas fa-ambulance"></i>
+                <span>Urgences européennes : 112</span>
+            </div>
+            <div class="emergency-item">
+                <i class="fas fa-fire-extinguisher"></i>
+                <span>Pompiers : 18</span>
+            </div>
+        </div>
+        <div class="footer-text">
+            © 2025 MediCare - Tous droits réservés
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.min.js'></script>
+    <script th:src="@{/js/doctor/appointments.js}" defer></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Rendez-vous - Medical App</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/patient/appointments.css?v=1.0}">
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MediCare</span>
+            </div>
+            <a href="/patients/home" class="ripple"><i class="fas fa-home"></i> Accueil</a>
+            <a href="/patients/doctors" class="ripple"><i class="fas fa-user-md"></i> Médecins</a>
+            <a href="/patients/appointments" class="ripple"><i class="far fa-calendar-check"></i> Rendez-vous</a>
+            <a href="/patients/profile" class="ripple"><i class="fas fa-user-circle"></i> Mon Profil</a>
+         
+        </div>
+        <div class="nav-right">
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn ripple">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="center-content">
+        <div class="appointments-container">
+            <div class="appointments-header">
+                <h1><i class="far fa-calendar-check"></i> Mes Rendez-vous</h1>
+                <p>Consultez et gérez tous vos rendez-vous médicaux programmés</p>
+            </div>
+            
+            <div class="appointments-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Médecin</th>
+                            <th>Motif</th>
+                            <th>Urgence</th>
+                            <th>Statut</th>
+                            <th>Raison de rejet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="rdv : ${appointments}" class="animate__animated animate__fadeIn">
+                            <td th:text="${#dates.format(rdv.date, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${rdv.doctor?.fullName ?: 'Non spécifié'}"></td>
+                            <td th:text="${rdv.object}"></td>
+                            <td th:text="${#strings.capitalize(rdv.urgency.toString().toLowerCase())}"></td>
+                            <td>
+                                <span th:class="${rdv.statut.name() == 'En_Attend'} ? 'status waiting' : (${rdv.statut.name() == 'Annule'} ? 'status cancelled' : 'status confirmed')">
+                                    [[${rdv.statut}]]
+                                </span>
+                            </td>
+                            <td>
+                                <span th:if="${rdv.statut.name() == 'Annule'}" th:text="${rdv.rejectionReason} ?: 'Aucune raison spécifiée'" class="rejection-reason"></span>
+                                <span th:if="${rdv.statut.name() != 'Annule'}" class="text-muted">-</span>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(appointments)}">
+                            <td colspan="6" class="empty-message">Aucun rendez-vous trouvé</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="/patients/doctors" class="action-btn ripple">
+                    <i class="far fa-calendar-plus"></i> Prendre un nouveau rendez-vous
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Notification -->
+
+
+    <!-- Footer -->
+  <footer class="medical-footer">
+    <div class="emergency-contact">
+        <div class="emergency-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>SAMU Maroc : 15</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-ambulance"></i>
+            <span>Urgences médicales : 141</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Police : 19</span>
+        </div>
+        <div class="emergency-item">
+            <i class="fas fa-fire-extinguisher"></i>
+            <span>Pompiers : 15</span>
+        </div>
+    </div>
+    <div class="footer-text">
+        © 2025 MediCare Maroc - Tous droits réservés
+    </div>
+</footer>
+
+     <!-- Script -->
+     <script th:src="@{/js/patient/appointments.js}" defer></script>
+</body>
+</html>
